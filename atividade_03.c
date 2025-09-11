@@ -1,3 +1,7 @@
+// Aluno: José Olavo 
+// Matrícula: 2023.1.08.009
+// Disciplina: Computação Paralela e Distribuída
+// Atividade 03: Multiplicação de Matrizes com MPI
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
