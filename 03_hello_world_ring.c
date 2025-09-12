@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>  /* For strlen             */
 #include <mpi.h>     /* For MPI functions, etc */ 
+//teste
 
 const int MAX_STRING = 100;
 
