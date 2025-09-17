@@ -1,12 +1,13 @@
+// Aluno: José Olavo 
+// Matrícula: 2023.1.08.009
+// Disciplina: Computação Paralela e Distribuída
+// Atividade 04: Contador de estrelas em uma imagem PGM
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define LIMIAR 200  // acima disso = estrela
+#define LIMIAR 200 
 
-// -------------------------
-// Função para ler imagem PGM (P2 ASCII)
-// -------------------------
 int* lerPGM(const char* filename, int* largura, int* altura) {
     FILE* f = fopen(filename, "r");
     if (!f) {
@@ -34,14 +35,10 @@ int* lerPGM(const char* filename, int* largura, int* altura) {
     return dados;
 }
 
-// -------------------------
-// Conta estrelas (componentes conectados)
-// -------------------------
 int contaEstrelas(int* img, int largura, int altura) {
     int* visitado = (int*) calloc(largura * altura, sizeof(int));
     int estrelas = 0;
 
-    // direções (8 vizinhos)
     int dx[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
     int dy[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
@@ -52,7 +49,6 @@ int contaEstrelas(int* img, int largura, int altura) {
             if (img[idx] > LIMIAR && !visitado[idx]) {
                 estrelas++;
 
-                // BFS (fila simples)
                 int* fila = (int*) malloc(sizeof(int) * largura * altura);
                 int frente = 0, tras = 0;
 
@@ -86,9 +82,6 @@ int contaEstrelas(int* img, int largura, int altura) {
     return estrelas;
 }
 
-// -------------------------
-// Programa principal MPI
-// -------------------------
 int main(int argc, char** argv) {
     MPI_Init(&argc, &argv);
 
@@ -121,7 +114,6 @@ int main(int argc, char** argv) {
             MPI_Send(imagem + inicio, tamBloco, MPI_INT, dest, 0, MPI_COMM_WORLD);
         }
 
-        // recebe resultados
         int totalEstrelas = 0;
         for (int src = 1; src < world_size; src++) {
             int parcial;
